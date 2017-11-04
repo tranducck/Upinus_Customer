@@ -1,0 +1,188 @@
+.account-footer
+  .wrap
+    %p.copyright Copyright © 2017 by Upinus. All rights reserved
+    %ul.account-footer-menu
+      %li
+        %a{ href: "http://upinus.com" } Home
+      %li
+        %a{ href: "http://upinus.com/features.html"} Feature
+      %li
+        %a{ href: "http://upinus.com/success-stories.html" } Success Stories
+      %li
+        %a{ href: "http://upinus.com/blog.html" } Academy Blog
+      %li
+        %a{ href: "http://upinus.com/contact.html" } Contact
+:javascript
+  $(document).ready(function() {
+
+    var theWin    = $(window),
+      curWh     = theWin.height(),
+      curWw     = theWin.width(),
+      $body     = $('body');
+
+    /*$('input').each(function() {
+      if ($(this).val() != '') {
+        $(this).parent('.input-wrap').addClass('filled');
+      } else {
+        $(this).parent('.input-wrap').removeClass('filled');
+      }
+    });
+    $('input').keyup(function() {
+      if ($(this).val() != '') {
+        $(this).parent('.input-wrap').addClass('filled');
+      } else {
+        $(this).parent('.input-wrap').removeClass('filled');
+      }
+    });
+    $('input').focus(function() {
+      $(this).parent('.input-wrap').addClass('focused');
+    });
+    $('input').blur(function() {
+      $(this).parent('.input-wrap').removeClass('focused');
+      if ($(this).val() != '') {
+        $(this).parent('.input-wrap').addClass('filled');
+      } else {
+        $(this).parent('.input-wrap').removeClass('filled');
+      }
+    });*/
+
+    $('.fake-shopify-url').keydown(function() {
+      $(this).addClass('filled');
+
+      if ($(window).width() > 767) {
+        $(this).parent().css('padding-right',$('.head-shopify-submit').outerWidth()+16+$(this).next('span').width());
+      } else {
+        $(this).parent().css('padding-right',20+$(this).next('span').width());
+      }
+    });
+
+    $('.fake-shopify-url:not(.unfocus)').focus().parent().parent().addClass('focusing');
+
+    $('.fake-shopify-url').blur(function() {
+      $(this).parent().parent().removeClass('focusing');
+      $('body').removeClass('home-hero-focus');
+    });
+
+    $('.fake-shopify-url-wrap').click(function() {
+
+
+      if ($(window).width() < 768) {
+        $(window).scrollTop($(this).offset().top - 64);
+        $(this).children('.fake-shopify-url').focus().parent().parent().addClass('focusing');
+      } else {
+        $(this).children('.fake-shopify-url').focus().parent().parent().addClass('focusing');
+      }
+
+    });
+
+    $('.fake-shopify-url').keyup(function() {
+      var the_name   = $(this).text(),
+        real_input = $(this).parent().prev('.shopify-url');
+
+      real_input.val(the_name);
+
+      if (the_name != '') {
+        $(this).addClass('filled');
+      } else {
+        $(this).removeClass('filled');
+      }
+
+    });
+
+    $('.logo img, .home-top-features-icon img').each(function(){
+      var $img = $(this);
+      var imgURL = $img.attr('src');
+
+      $.get(imgURL, function(data) {
+      // Get the SVG tag, ignore the rest
+      var $svg = $(data).find('svg');
+
+      // Remove any invalid XML tags as per http://validator.w3.org
+      $svg = $svg.removeAttr('xmlns:a');
+
+      // Check if the viewport is set, if the viewport is not set the SVG wont't scale.
+      if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+          $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+      }
+
+      // Replace image with new SVG
+      $img.replaceWith($svg);
+
+      }, 'xml');
+
+    });
+
+    $(window).scroll(function() {
+      var scrTop = $(this).scrollTop();
+
+      if (scrTop > 10) {
+        $('body').addClass('sticky');
+      } else {
+        $('body').removeClass('sticky');
+      }
+
+    });
+
+    /*$('.has-sub').click(function() {
+      var bWidth = $(window).width();
+
+      if (bWidth <= 1024) {
+        $(this).addClass('open-sub');
+        $('#nav').addClass('sub-opened');
+        return false;
+      } else {
+        $(this).removeClass('open-sub');
+        $('#nav').removeClass('sub-opened');
+      }
+
+      return false;
+
+    });*/
+
+    $('.close-sub').on('click', function() {
+
+      $(this).parent().prev('a.has-sub.open-sub').removeClass('open-sub');
+      $('#nav').removeClass('sub-opened');
+
+      return false;
+
+    });
+
+    $('.nav-menu-trigger').click(function() {
+      $('.has-sub').removeClass('open-sub');
+      $('#nav').removeClass('sub-opened');
+    });
+
+    $('[direction]').click(function() {
+      var dir = $(this).attr('direction');
+
+      if ($(this).hasClass('home-hero-cta') && $(window).width() < 768) {
+        $('body').scrollTo($(this).attr('sdirection'), 600);
+      } else {
+        $('body').scrollTo(dir, 600);
+      }
+
+      if ($(this).hasClass('home-hero-cta')) {
+        $('body').addClass('home-hero-focus');
+        $('.fake-shopify-url').focus().parent().parent().addClass('focusing');
+      }
+      return false;
+    });
+
+    function checkSize() {
+      var $accountForm = $('.account-form-wrap'),
+        windowHeight = $(window).height(),
+        windowHeighteF = windowHeight - $('.account-footer').height() - 96;
+
+      if (windowHeighteF < $accountForm.height()) {
+        $accountForm.addClass('relative');
+      } else {
+        $accountForm.removeClass('relative');
+      }
+    } checkSize();
+
+    $(window).resize(function() {
+      checkSize();
+    });
+
+  });

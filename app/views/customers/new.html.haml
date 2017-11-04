@@ -1,0 +1,39 @@
+.text-center.account-form-wrap
+  = render "shared/header"
+  = form_for @customer, html: { class: "account-form signup" } do |f|
+    .form-title
+      %h2.h3.lighter Customer Management
+    %p.form-title-desc
+      - if flash.present?
+        - flash.each do |type, msg|
+          %span{ class: "text-#{type}" }
+            = msg
+      - else
+        Insert customer info here
+    .input-wrap
+      %i.fa.fa-envelope.input-icon
+      = f.email_field :email,
+        class: "input icon small-text big less-round",
+        placeholder: "Insert email here"
+    - if @customer.errors.messages[:email].length > 0
+      .text-left.error-explanation{ "data-error-field": "email" }
+        = "Email " + @customer.errors.messages[:email].join(", ")
+    .input-wrap
+      %i.fa.fa-user.input-icon
+      = f.text_field :name,
+        class: "input icon small-text big less-round",
+        placeholder: "Insert name here"
+    - if @customer.errors.messages[:name].length > 0
+      .text-left.error-explanation{ "data-error-field": "name" }
+        = "Name " + @customer.errors.messages[:name].join(", ")
+    .input-wrap
+      %i.fa.fa-phone.input-icon
+      = f.text_field :phone,
+        class: "input icon small-text big less-round",
+        placeHolder: "Insert phone here"
+    - if @customer.errors.messages[:phone].length > 0
+      .text-left.error-explanation{ "data-error-field": "phone" }
+        = "Phone " + @customer.errors.messages[:phone].join(", ")
+    %p.form-side-actions
+      %button.btn.gradient.signup-submit Save
+      %a{ href: "https://app.upinus.com" } Back to Upinus
