@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
+    %meta{ content: "width=device-width, initial-scale=1.0", name: "viewport" }
+    %meta{ name: "description", content: "Upinus automates 80% of your AliExpress dropshipping business by Pinning & Pushing dropshipped products to Shopify, automatically fulfilling orders and delivering products from Suppliers."}
+    %title UpinusCustomer
+    = csrf_meta_tags
+    %link{:href => "https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,700&subset=vietnamese", :rel => "stylesheet"}/
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body.signup-page
+    #body
+      .wrap
+        = yield
+      = render "shared/footer"

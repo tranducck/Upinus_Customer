@@ -1,0 +1,20 @@
+@import "session/styles";
+@import "session/fonts";
+@import "session/grid";
+@import "font-awesome";
+
+.input-wrap {
+  position: relative;
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+  }
+}
+
+.error-explanation {
+  color: red;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
